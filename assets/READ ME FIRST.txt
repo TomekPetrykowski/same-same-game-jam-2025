@@ -1,0 +1,41 @@
+                           Same Same Game Jam 2025 RULES
+
+Welcome to Same Same Game Jam 2025! Please carefully read the following rules and guidelines regarding the use of provided assets:
+
+1. Usage Restriction:
+   - The assets provided are exclusively for use in Same Same Game Jam 2025.
+   - Unauthorized use of these assets in commercial projects or other non-jam projects without the author's permission will result in immediate action.
+
+2. Pixel Art Format:
+   - The assets are created in PIXEL ART, a digital art form that utilizes small squares (pixels).
+   - If you are new to pixel art, you can use PISKEL, a free and open-source software, to create and edit pixel animations and sprites.
+
+3. Customization:
+   - You are free to customize the provided assets to suit your project's needs.
+   - You may also incorporate your own assets, but please strive to maintain a cohesive theme.
+
+4. Thematic Consistency:
+   - Ensure that your custom or additional assets align closely with the overall theme of the provided assets to maintain visual consistency.
+
+5. Credit Attribution:
+   - Properly credit the original authors of the assets in your project documentation or credits section.
+
+6. Fair Use:
+   - Respect the work of others. Do not use assets that you do not have permission to use and do not plagiarize.
+
+7. Submission Guidelines:
+   - Submit your final project by the specified deadline.
+   - Ensure your submission includes all necessary files and documentation for the judges to review.
+
+8. Collaboration:
+   - Feel free to collaborate with others, but ensure all collaborators are credited properly.
+
+9. Feedback and Community:
+   - Engage with the community in the discord server by providing constructive feedback on other participants' projects.
+   - Use the provided forums and communication channels to ask for help, share progress, and collaborate.
+
+10. Legal and Ethical Compliance:
+    - Ensure your project adheres to all applicable laws and ethical guidelines.
+    - Avoid content that is offensive, discriminatory, or inappropriate.
+
+Thank you for participating in Same Same Game Jam 2025. Let's create some amazing projects together! Happy Jamming!
