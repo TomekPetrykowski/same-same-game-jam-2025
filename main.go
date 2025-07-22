@@ -7,10 +7,10 @@ import (
 )
 
 func main() {
-	game := Game{}
+	game := NewGame()
 	game.Set()
 
-	if err := ebiten.RunGame(&game); err != nil {
+	if err := ebiten.RunGame(game); err != nil {
 		log.Fatal(err)
 	}
 }
