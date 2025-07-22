@@ -2,9 +2,14 @@ package main
 
 import (
 	"fmt"
+	"game/animations"
+	"game/entities"
 	e "game/entities"
+	s "game/spritesheets"
 	v "game/utils/math"
+
 	"image/color"
+	"log"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
@@ -14,14 +19,64 @@ import (
 var ballSprite, _, _ = ebitenutil.NewImageFromFile("assets/ball.png")
 
 type Game struct {
-	c1   e.Circle
-	c2   e.Circle
-	r1   e.Rect
-	r2   e.Rect
-	rect bool
+	player            *e.Player
+	playerSpriteSheet *s.SpriteSheet
+	c1                e.Circle
+	c2                e.Circle
+	r1                e.Rect
+	r2                e.Rect
+	rect              bool
+}
+
+func NewGame() *Game {
+	playerImg, _, err := ebitenutil.NewImageFromFile("assets/player.png")
+	if err != nil {
+		// handle error
+		log.Fatal(err)
+	}
+	playerSpriteSheet := s.NewSpriteSheet(2, 3, 15, 26)
+
+	return &Game{
+		player: &entities.Player{
+			Entity: entities.Entity{
+				Sprite: &entities.Sprite{
+					Img: playerImg,
+					X:   50.0,
+					Y:   50.0,
+				},
+			},
+			Animations: map[entities.State]*animations.Animation{
+				entities.Up:   animations.NewAnimation(3, 5, 2, 20.0),
+				entities.Down: animations.NewAnimation(2, 4, 2, 20.0),
+			},
+		},
+		playerSpriteSheet: playerSpriteSheet,
+	}
 }
 
 func (g *Game) Update() error {
+	g.player.Vel = v.Vec{}
+
+	if ebiten.IsKeyPressed(ebiten.KeyLeft) {
+		g.player.Vel.X = -1
+	}
+	if ebiten.IsKeyPressed(ebiten.KeyRight) {
+		g.player.Vel.X = 1
+	}
+	if ebiten.IsKeyPressed(ebiten.KeyUp) {
+		g.player.Vel.Y = -1
+	}
+	if ebiten.IsKeyPressed(ebiten.KeyDown) {
+		g.player.Vel.Y = 1
+	}
+
+	g.player.Pos.Add(g.player.Vel)
+
+	activeAnim := g.player.ActiveAnimation(g.player.Vel)
+	if activeAnim != nil {
+		activeAnim.Update()
+	}
+
 	vel := v.Vec{}
 
 	if inpututil.IsKeyJustPressed(ebiten.KeyE) {
@@ -76,6 +131,23 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	DrawRect(g.r2, screen)
 	DrawCircle(g.c1, screen)
 	DrawCircle(g.c2, screen)
+
+	op := ebiten.DrawImageOptions{}
+	op.GeoM.Translate(g.player.Pos.X, g.player.Pos.Y)
+	playerFrame := 0
+	activeAnim := g.player.ActiveAnimation(g.player.Vel)
+	if activeAnim != nil {
+		playerFrame = activeAnim.Frame()
+	}
+
+	screen.DrawImage(
+		g.player.Sprite.Img.SubImage(
+			g.playerSpriteSheet.Rect(playerFrame),
+		).(*ebiten.Image),
+		&op,
+	)
+
+	op.GeoM.Reset()
 
 	ebitenutil.DebugPrint(screen, "Hello, World!")
 }
