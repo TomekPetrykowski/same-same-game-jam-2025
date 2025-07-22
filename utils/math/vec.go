@@ -14,9 +14,23 @@ func (v Vec) Added(v2 Vec) Vec {
 	return Vec{v.X + v2.X, v.Y + v2.Y}
 }
 
+func (v Vec) AddedX(x float64) Vec {
+	return Vec{v.X + x, v.Y}
+}
+func (v Vec) AddedY(y float64) Vec {
+	return Vec{v.X, v.Y + y}
+}
+
 func (v *Vec) Add(v2 Vec) {
 	v.X += v2.X
 	v.Y += v2.Y
+}
+
+func (v *Vec) AddX(x float64) {
+	v.X += x
+}
+func (v *Vec) AddY(y float64) {
+	v.Y += y
 }
 
 func (v *Vec) Invert() {
