@@ -5,7 +5,6 @@ import (
 
 	"game/scenes"
 
-
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
@@ -18,11 +17,11 @@ type Game struct {
 
 func NewGame() *Game {
 	sceneMap := Scenes{
-		scenes.DebugSceneId: scenes.NewDebugScene(),
-
+		scenes.PlayerTestSceneId: scenes.NewPlayerTestScene(),
+		scenes.DebugSceneId:      scenes.NewDebugScene(),
 	}
 
-	activeSceneId := scenes.DebugSceneId
+	activeSceneId := scenes.PlayerTestSceneId
 
 	sceneMap[activeSceneId].FirstLoad()
 

@@ -8,6 +8,7 @@ const (
 	GameSceneId SceneId = iota
 	StartSceneId
 	ExitSceneId
+	PlayerTestSceneId
 	DebugSceneId
 )
 
