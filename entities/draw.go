@@ -1,6 +1,7 @@
 package entities
 
 import (
+	v "game/utils/math"
 	"image/color"
 
 	"github.com/hajimehoshi/ebiten/v2"
@@ -37,4 +38,11 @@ func DrawCollider(ct CollidingType, screen *ebiten.Image) {
 		DrawCircle(*c, screen)
 	}
 
+}
+
+func DrawSprite(screen, sprite *ebiten.Image, pos, offset v.Vec) {
+	op := ebiten.DrawImageOptions{}
+	op.GeoM.Translate(pos.Unpack())
+	op.GeoM.Translate(offset.Unpack())
+	screen.DrawImage(sprite, &op)
 }
