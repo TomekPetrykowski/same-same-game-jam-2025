@@ -21,7 +21,7 @@ func NewGame() *Game {
 		scenes.TestLevelSceneId:  scenes.NewTestLevelScene(),
 	}
 
-	activeSceneId := scenes.PlayerTestSceneId
+	activeSceneId := scenes.TestLevelSceneId
 
 	sceneMap[activeSceneId].FirstLoad()
 

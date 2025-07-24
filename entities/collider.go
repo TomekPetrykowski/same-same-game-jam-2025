@@ -65,7 +65,7 @@ func (r Rect) CollidesWith(ct CollidingType) bool {
 	return false
 }
 
-func (c Circle) CollidesWithRect(r Rect) bool {
+func (c *Circle) CollidesWithRect(r Rect) bool {
 	x := math.Max(r.Pos.X, math.Min(c.Pos.X, r.Pos.X+r.X))
 	y := math.Max(r.Pos.Y, math.Min(c.Pos.Y, r.Pos.Y+r.Y))
 	if c.Pos.DistanceTo(v.Vec{X: x, Y: y}) < c.Radius {
@@ -175,4 +175,12 @@ func (c *Circle) CollideAndSlideCircle(c2 Circle) {
 		diff := (c.Radius + c2.Radius) - (c.Pos.Added(c2.Pos.Inverted())).Length()
 		c.Pos.Add(norm.Multiplied(diff))
 	}
+}
+
+func NewCircle(x, y, r float64) *Circle {
+	return &Circle{Pos: v.Vec{X: x, Y: y}, Radius: r}
+}
+
+func NewRect(x, y, w, h float64) *Rect {
+	return &Rect{Pos: v.Vec{X: x, Y: y}, X: w, Y: h}
 }
