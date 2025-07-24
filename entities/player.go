@@ -14,16 +14,16 @@ const (
 
 type Player struct {
 	Entity
+	FacingUp   bool
 	Vel        v.Vec
 	Animations map[State]*animations.Animation
 }
 
-func (p *Player) ActiveAnimation(vel v.Vec) *animations.Animation {
-	if vel.Y > 0 {
+func (p *Player) ActiveAnimation() *animations.Animation {
+	if p.FacingUp {
+		return p.Animations[Up]
+	} else {
 		return p.Animations[Down]
 	}
-	if vel.Y < 0 {
-		return p.Animations[Up]
-	}
-	return nil
+	// return nil
 }

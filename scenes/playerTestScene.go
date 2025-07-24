@@ -12,7 +12,6 @@ import (
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
-	"github.com/hajimehoshi/ebiten/v2/inpututil"
 )
 
 type PlayerTestScene struct {
@@ -74,7 +73,7 @@ func (d *PlayerTestScene) Draw(screen *ebiten.Image) {
 	op := ebiten.DrawImageOptions{}
 	op.GeoM.Translate(d.player.Pos.X, d.player.Pos.Y)
 	playerFrame := 0
-	activeAnim := d.player.ActiveAnimation(d.player.Vel)
+	activeAnim := d.player.ActiveAnimation()
 	if activeAnim != nil {
 		playerFrame = activeAnim.Frame()
 	}
@@ -93,58 +92,63 @@ func (d *PlayerTestScene) Draw(screen *ebiten.Image) {
 
 func (d *PlayerTestScene) Update() SceneId {
 	// player movement
-	d.player.Vel = v.Vec{}
+	vel := v.Vec{}
 
 	if ebiten.IsKeyPressed(ebiten.KeyLeft) {
-		d.player.Vel.X = -1
+		vel.X = -1
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyRight) {
-		d.player.Vel.X = 1
+		vel.X = 1
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyUp) {
-		d.player.Vel.Y = -1
+		vel.Y = -1
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyDown) {
-		d.player.Vel.Y = 1
+		vel.Y = 1
 	}
 
-	d.player.Pos.Add(d.player.Vel)
+	if vel.Y < 0 {
+		d.player.FacingUp = true
+	} else if vel.Y > 0 {
+		d.player.FacingUp = false
+	}
 
-	activeAnim := d.player.ActiveAnimation(d.player.Vel)
+	d.player.Pos.Add(vel)
+
+	activeAnim := d.player.ActiveAnimation()
 	if activeAnim != nil {
 		activeAnim.Update()
 	}
 
 	// circle movement
 
-	vel := v.Vec{}
+	// vel := v.Vec{}
 
-	if inpututil.IsKeyJustPressed(ebiten.KeyE) {
-		d.rect = !d.rect
-	}
-	if ebiten.IsKeyPressed(ebiten.KeyA) {
-		vel.X -= 1
-	}
-	if ebiten.IsKeyPressed(ebiten.KeyD) {
-		vel.X += 1
-	}
-	if ebiten.IsKeyPressed(ebiten.KeyW) {
-		vel.Y -= 1
-	}
-	if ebiten.IsKeyPressed(ebiten.KeyS) {
-		vel.Y += 1
-	}
-	if d.rect {
-		d.r1.Pos.Add(vel)
-		if d.r1.CollidesWith(d.c2) || d.r1.CollidesWith(d.r2) {
-			d.r1.Pos.Add(vel.Inverted())
-		}
-	} else {
-		d.c1.Pos.Add(vel)
-		if d.c1.CollidesWith(d.c2) || d.c1.CollidesWith(d.r2) {
-			d.c1.Pos.Add(vel.Inverted())
-		}
-	}
+	// if inpututil.IsKeyJustPressed(ebiten.KeyE) {
+	// 	d.rect = !d.rect
+	// }
+	// if ebiten.IsKeyPressed(ebiten.KeyA) {
+	// 	vel.X -= 1
+	// }
+	// if ebiten.IsKeyPressed(ebiten.KeyD) {
+	// 	vel.X += 1
+	// }
+	// if ebiten.IsKeyPressed(ebiten.KeyW) {
+	// 	vel.Y -= 1
+	// }
+	// if ebiten.IsKeyPressed(ebiten.KeyS) {
+	// 	vel.Y += 1
+	// }
+	// if d.rect {
+	// 	d.r1.Pos.Add(vel)
+	// 	if d.r1.CollidesWith(&d.c2) || d.r1.CollidesWith(&d.r2) {
+	// 		d.r1.Pos.Add(vel.Inverted())
+	// 	}
+	// } else {
+	// 	d.c1.GetPos().Add(vel)
+	// 	d.c1.CollideAndSlide(&d.c2)
+	// 	d.c1.CollideAndSlide(&d.r2)
+	// }
 	return PlayerTestSceneId
 }
 
