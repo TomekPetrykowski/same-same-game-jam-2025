@@ -1,15 +1,10 @@
 package scenes
 
 import (
-	"game/animations"
-	"game/entities"
 	e "game/entities"
 	s "game/spritesheets"
-	v "game/utils/math"
-	"log"
 
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
 type TestLevelScene struct {
@@ -24,30 +19,10 @@ func (s *TestLevelScene) GetObjects() *map[string][]e.GameObject {
 }
 
 func NewTestLevelScene() *TestLevelScene {
-	playerImg, _, err := ebitenutil.NewImageFromFile("assets/player.png")
-	if err != nil {
-		// handle error
-		log.Fatal(err)
-	}
-	playerSpriteSheet := s.NewSpriteSheet(2, 3, 15, 26)
 
 	return &TestLevelScene{
 		loaded: false,
-		player: &entities.Player{
-			Entity: entities.Entity{
-				Sprite: &entities.Sprite{
-					Img: playerImg,
-					X:   50.0,
-					Y:   50.0,
-				},
-				Collider: &e.Circle{Pos: v.Vec{X: 0, Y: 0}, Radius: 10},
-			},
-			Animations: map[entities.State]*animations.Animation{
-				entities.Up:   animations.NewAnimation(3, 5, 2, 20.0),
-				entities.Down: animations.NewAnimation(2, 4, 2, 20.0),
-			},
-		},
-		playerSpriteSheet: playerSpriteSheet,
+		player: e.NewPlayer(0, 0),
 	}
 }
 
