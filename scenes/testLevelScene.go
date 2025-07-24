@@ -16,6 +16,11 @@ type TestLevelScene struct {
 	loaded            bool
 	player            *e.Player
 	playerSpriteSheet *s.SpriteSheet
+	objects           map[string][]e.GameObject
+}
+
+func (s *TestLevelScene) GetObjects() *map[string][]e.GameObject {
+	return &s.objects
 }
 
 func NewTestLevelScene() *TestLevelScene {
@@ -35,6 +40,7 @@ func NewTestLevelScene() *TestLevelScene {
 					X:   50.0,
 					Y:   50.0,
 				},
+				Collider: &e.Circle{Pos: v.Vec{X: 0, Y: 0}, Radius: 10},
 			},
 			Animations: map[entities.State]*animations.Animation{
 				entities.Up:   animations.NewAnimation(3, 5, 2, 20.0),
@@ -42,11 +48,17 @@ func NewTestLevelScene() *TestLevelScene {
 			},
 		},
 		playerSpriteSheet: playerSpriteSheet,
-		// rect:              false,s
 	}
 }
 
 func (d *TestLevelScene) FirstLoad() {
+	//read level data
+	d.objects = make(map[string][]e.GameObject)
+	d.objects["player"] = []e.GameObject{d.player}
+	d.objects["enemies"] = []e.GameObject{}
+	d.objects["enemyProjectiles"] = []e.GameObject{}
+	d.objects["playerProjectiles"] = []e.GameObject{}
+	d.objects["staticObjects"] = []e.GameObject{e.NewEntity(e.NewRect(200, 200, 20, 20)), e.NewEntity(e.NewRect(200, 100, 20, 20))}
 }
 
 func (d *TestLevelScene) IsLoaded() bool {
@@ -54,42 +66,17 @@ func (d *TestLevelScene) IsLoaded() bool {
 }
 
 func (d *TestLevelScene) Draw(screen *ebiten.Image) {
-
-	op := ebiten.DrawImageOptions{}
-	op.GeoM.Translate(d.player.Pos.X, d.player.Pos.Y)
-	playerFrame := 0
-	activeAnim := d.player.ActiveAnimation()
-	if activeAnim != nil {
-		playerFrame = activeAnim.Frame()
+	for _, list := range d.objects {
+		for _, o := range list {
+			o.Draw(screen)
+		}
 	}
 
-	screen.DrawImage(
-		d.player.Sprite.Img.SubImage(
-			d.playerSpriteSheet.Rect(playerFrame),
-		).(*ebiten.Image),
-		&op,
-	)
-
-	// op.GeoM.Reset()
-
-	ebitenutil.DebugPrint(screen, "Press E to change objects")
+	// ebitenutil.DebugPrint(screen, "Press E to change objects")
 }
 
 func (d *TestLevelScene) Update() SceneId {
-
-	vel := v.Vec{}
-	if ebiten.IsKeyPressed(ebiten.KeyA) {
-		vel.X -= 1
-	}
-	if ebiten.IsKeyPressed(ebiten.KeyD) {
-		vel.X += 1
-	}
-	if ebiten.IsKeyPressed(ebiten.KeyW) {
-		vel.Y -= 1
-	}
-	if ebiten.IsKeyPressed(ebiten.KeyS) {
-		vel.Y += 1
-	}
+	d.player.Update(d)
 	return TestLevelSceneId
 }
 

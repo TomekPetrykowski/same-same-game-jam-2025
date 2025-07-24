@@ -2,7 +2,6 @@ package scenes
 
 import (
 	e "game/entities"
-	"game/utils/draw"
 	v "game/utils/math"
 
 	"github.com/hajimehoshi/ebiten/v2"
@@ -38,10 +37,10 @@ func (d *DebugScene) IsLoaded() bool {
 }
 
 func (d *DebugScene) Draw(screen *ebiten.Image) {
-	draw.DrawRect(d.r1, screen)
-	draw.DrawRect(d.r2, screen)
-	draw.DrawCircle(d.c1, screen)
-	draw.DrawCircle(d.c2, screen)
+	e.DrawRect(d.r1, screen)
+	e.DrawRect(d.r2, screen)
+	e.DrawCircle(d.c1, screen)
+	e.DrawCircle(d.c2, screen)
 
 	ebitenutil.DebugPrint(screen, "Press E to change objects")
 }

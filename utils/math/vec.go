@@ -38,6 +38,10 @@ func (v *Vec) Invert() {
 	v.Y = -v.Y
 }
 
+func (v *Vec) Unpack() (float64, float64) {
+	return v.X, v.Y
+}
+
 func (v Vec) Inverted() Vec {
 	return Vec{-v.X, -v.Y}
 }

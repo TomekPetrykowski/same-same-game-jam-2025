@@ -1,7 +1,6 @@
-package draw
+package entities
 
 import (
-	e "game/entities"
 	"image/color"
 
 	"github.com/hajimehoshi/ebiten/v2"
@@ -10,7 +9,7 @@ import (
 
 var ballSprite, _, _ = ebitenutil.NewImageFromFile("assets/ball.png")
 
-func DrawRect(r e.Rect, screen *ebiten.Image) {
+func DrawRect(r Rect, screen *ebiten.Image) {
 	op := ebiten.DrawImageOptions{}
 	img := ebiten.NewImage(int(r.X), int(r.Y))
 	img.Fill(color.White)
@@ -18,7 +17,7 @@ func DrawRect(r e.Rect, screen *ebiten.Image) {
 	screen.DrawImage(img, &op)
 }
 
-func DrawCircle(c e.Circle, screen *ebiten.Image) {
+func DrawCircle(c Circle, screen *ebiten.Image) {
 	op := ebiten.DrawImageOptions{}
 	img := ebiten.NewImageFromImage(ballSprite)
 	scale := float64(float64(c.Radius) * 2 / 32)
@@ -26,4 +25,16 @@ func DrawCircle(c e.Circle, screen *ebiten.Image) {
 	op.GeoM.Translate(-(float64(c.Radius)), -(float64(c.Radius)))
 	op.GeoM.Translate(c.Pos.X, c.Pos.Y)
 	screen.DrawImage(img, &op)
+}
+
+func DrawCollider(ct CollidingType, screen *ebiten.Image) {
+	r, ok := ct.(*Rect)
+	if ok {
+		DrawRect(*r, screen)
+	}
+	c, ok := ct.(*Circle)
+	if ok {
+		DrawCircle(*c, screen)
+	}
+
 }

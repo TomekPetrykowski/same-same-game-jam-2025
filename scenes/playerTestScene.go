@@ -5,7 +5,6 @@ import (
 	"game/entities"
 	e "game/entities"
 	s "game/spritesheets"
-	"game/utils/draw"
 	v "game/utils/math"
 
 	"log"
@@ -42,6 +41,7 @@ func NewPlayerTestScene() *PlayerTestScene {
 					X:   50.0,
 					Y:   50.0,
 				},
+				Collider: &e.Circle{Pos: v.Vec{X: 0, Y: 0}, Radius: 10},
 			},
 			Animations: map[entities.State]*animations.Animation{
 				entities.Up:   animations.NewAnimation(3, 5, 2, 20.0),
@@ -65,10 +65,10 @@ func (d *PlayerTestScene) IsLoaded() bool {
 }
 
 func (d *PlayerTestScene) Draw(screen *ebiten.Image) {
-	draw.DrawRect(d.r1, screen)
-	draw.DrawRect(d.r2, screen)
-	draw.DrawCircle(d.c1, screen)
-	draw.DrawCircle(d.c2, screen)
+	e.DrawRect(d.r1, screen)
+	e.DrawRect(d.r2, screen)
+	e.DrawCircle(d.c1, screen)
+	e.DrawCircle(d.c2, screen)
 
 	op := ebiten.DrawImageOptions{}
 	op.GeoM.Translate(d.player.Pos.X, d.player.Pos.Y)
@@ -77,6 +77,17 @@ func (d *PlayerTestScene) Draw(screen *ebiten.Image) {
 	if activeAnim != nil {
 		playerFrame = activeAnim.Frame()
 	}
+
+	d.player.Draw(screen)
+	// all := make([]*e.Entity, 0)
+	// append(all, enemies)
+	// sort(all)
+	// for i,e := range all{
+	// 	e.draw()
+	// }
+
+	// d.player.Draw(screen)
+	// screen.DrawImage(d.player.CurrentSprite())
 
 	screen.DrawImage(
 		d.player.Sprite.Img.SubImage(
@@ -113,7 +124,7 @@ func (d *PlayerTestScene) Update() SceneId {
 		d.player.FacingUp = false
 	}
 
-	d.player.Pos.Add(vel)
+	d.player.Collider.GetPos().Add(vel)
 
 	activeAnim := d.player.ActiveAnimation()
 	if activeAnim != nil {
