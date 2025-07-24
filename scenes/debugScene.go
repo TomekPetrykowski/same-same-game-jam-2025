@@ -66,14 +66,14 @@ func (d *DebugScene) Update() SceneId {
 	}
 	if d.rect {
 		d.r1.Pos.Add(vel)
-		if d.r1.CollidesWith(d.c2) || d.r1.CollidesWith(d.r2) {
+		if d.r1.CollidesWith(&d.c2) || d.r1.CollidesWith(&d.r2) {
 			d.r1.Pos.Add(vel.Inverted())
 		}
 	} else {
-		d.c1.Pos.Add(vel)
-		if d.c1.CollidesWith(d.c2) || d.c1.CollidesWith(d.r2) {
-			d.c1.Pos.Add(vel.Inverted())
-		}
+		// d.c1.Pos.Add(vel)
+		d.c1.GetPos().Add(vel)
+		d.c1.CollideAndSlide(&d.c2)
+		d.c1.CollideAndSlide(&d.r2)
 	}
 	return DebugSceneId
 }

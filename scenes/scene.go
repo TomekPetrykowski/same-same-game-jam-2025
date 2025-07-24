@@ -10,6 +10,7 @@ const (
 	ExitSceneId
 	PlayerTestSceneId
 	DebugSceneId
+	TestLevelSceneId
 )
 
 type Scene interface {

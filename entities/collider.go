@@ -6,7 +6,10 @@ import (
 )
 
 type CollidingType interface {
-	CollidesWith(CollidingType) bool
+	CollidesWith(CollidingType) bool //Checks if a the objects ovelpas with the given object
+	CollideAndSlide(CollidingType)
+	GetPos() *v.Vec
+	SetPos(v.Vec)
 }
 
 type Rect struct {
@@ -20,26 +23,44 @@ type Circle struct {
 	Radius float64
 }
 
-func (c Circle) CollidesWith(ct CollidingType) bool {
-	c2, ok := ct.(Circle)
+func (c *Circle) GetPos() *v.Vec {
+	return &c.Pos
+}
+
+func (r *Rect) GetPos() *v.Vec {
+	return &r.Pos
+}
+
+func (c *Circle) SetPos(v v.Vec) {
+	c.Pos.X = v.X
+	c.Pos.Y = v.Y
+}
+
+func (r *Rect) SetPos(v v.Vec) {
+	r.Pos.X = v.X
+	r.Pos.Y = v.Y
+}
+
+func (c *Circle) CollidesWith(ct CollidingType) bool {
+	c2, ok := ct.(*Circle)
 	if ok {
-		return c.CollidesWithCircle(c2)
+		return c.CollidesWithCircle(*c2)
 	}
-	r, ok := ct.(Rect)
+	r, ok := ct.(*Rect)
 	if ok {
-		return c.CollidesWithRect(r)
+		return c.CollidesWithRect(*r)
 	}
 	return false
 }
 
 func (r Rect) CollidesWith(ct CollidingType) bool {
-	c, ok := ct.(Circle)
+	c, ok := ct.(*Circle)
 	if ok {
-		return r.CollidesWithCircle(c)
+		return r.CollidesWithCircle(*c)
 	}
-	r2, ok := ct.(Rect)
+	r2, ok := ct.(*Rect)
 	if ok {
-		return r.CollidesWithRect(r2)
+		return r.CollidesWithRect(*r2)
 	}
 	return false
 }
@@ -80,13 +101,13 @@ func (r Rect) CollidesWithCircle(c Circle) bool {
 }
 
 func (r *Rect) CollideAndSlide(ct CollidingType) {
-	c2, ok := ct.(Circle)
+	c2, ok := ct.(*Circle)
 	if ok {
-		r.CollideAndSlideCircle(c2)
+		r.CollideAndSlideCircle(*c2)
 	}
-	r2, ok := ct.(Rect)
+	r2, ok := ct.(*Rect)
 	if ok {
-		r.CollideAndSlideRect(r2)
+		r.CollideAndSlideRect(*r2)
 	}
 
 }
@@ -127,13 +148,13 @@ func (r *Rect) CollideAndSlideCircle(c Circle) {
 }
 
 func (c *Circle) CollideAndSlide(ct CollidingType) {
-	c2, ok := ct.(Circle)
+	c2, ok := ct.(*Circle)
 	if ok {
-		c.CollideAndSlideCircle(c2)
+		c.CollideAndSlideCircle(*c2)
 	}
-	r, ok := ct.(Rect)
+	r, ok := ct.(*Rect)
 	if ok {
-		c.CollideAndSlideRect(r)
+		c.CollideAndSlideRect(*r)
 	}
 }
 

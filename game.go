@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-
 	"game/scenes"
 
 	"github.com/hajimehoshi/ebiten/v2"
@@ -19,6 +18,7 @@ func NewGame() *Game {
 	sceneMap := Scenes{
 		scenes.PlayerTestSceneId: scenes.NewPlayerTestScene(),
 		scenes.DebugSceneId:      scenes.NewDebugScene(),
+		scenes.TestLevelSceneId:  scenes.NewTestLevelScene(),
 	}
 
 	activeSceneId := scenes.PlayerTestSceneId
