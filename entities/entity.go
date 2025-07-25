@@ -20,12 +20,6 @@ func (e *Entity) Update(scene Scene) {
 	// print("enitityUpdate")
 }
 
-type GameObject interface {
-	GetCollider() *CollidingType
-	Update(Scene)
-	Draw(*ebiten.Image)
-}
-
 func (e *Entity) Draw(screen *ebiten.Image) {
 
 	if e.Sprite == nil {

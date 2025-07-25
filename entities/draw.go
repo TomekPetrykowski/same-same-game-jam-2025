@@ -1,7 +1,6 @@
 package entities
 
 import (
-	"image"
 	v "game/utils/math"
 	"image/color"
 
@@ -40,12 +39,6 @@ func DrawCollider(ct CollidingType, screen *ebiten.Image) {
 	}
 
 }
-
-// Wrapper for casting subimage to ebiten.Image
-func SubImage(sprite *Sprite, img image.Rectangle) *ebiten.Image {
-	return sprite.Img.SubImage(img).(*ebiten.Image)
-}
-
 
 func DrawSprite(screen, sprite *ebiten.Image, pos, offset v.Vec) {
 	op := ebiten.DrawImageOptions{}
