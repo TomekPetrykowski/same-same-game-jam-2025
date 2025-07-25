@@ -3,7 +3,6 @@ package scenes
 import (
 	e "game/entities"
 
-	spritesheet "game/spritesheets"
 	"game/utils/images"
 	"image/color"
 
@@ -11,18 +10,9 @@ import (
 )
 
 type TestLevelScene struct {
-
-	loaded            bool
-	player            *e.Player
-	objects           map[e.SceneObject][]e.GameObject
-}
-
-func (s *TestLevelScene) GetObjects() *map[e.SceneObject][]e.GameObject {
-	return &s.objects
-}
-
-func (s *TestLevelScene) AddObject(key string, object e.GameObject) {
-	s.objects[key] = append(s.objects[key], object)
+	loaded  bool
+	player  *e.Player
+	objects map[e.SceneObjectId][]e.GameObject
 }
 
 func NewTestLevelScene() *TestLevelScene {
@@ -31,6 +21,14 @@ func NewTestLevelScene() *TestLevelScene {
 		loaded: false,
 		player: e.NewPlayer(0, 0),
 	}
+}
+
+func (s *TestLevelScene) GetObjects() *map[e.SceneObjectId][]e.GameObject {
+	return &s.objects
+}
+
+func (s *TestLevelScene) AddObject(key e.SceneObjectId, object e.GameObject) {
+	s.objects[key] = append(s.objects[key], object)
 }
 
 func (d *TestLevelScene) FirstLoad() {
@@ -46,9 +44,13 @@ func (d *TestLevelScene) FirstLoad() {
 	}
 
 	//read level data
-	d.objects = make(map[e.SceneObject][]e.GameObject)
+	d.objects = make(map[e.SceneObjectId][]e.GameObject)
 	d.objects[e.PlayerObjectId] = []e.GameObject{d.player}
-	d.objects[e.EnemiesObjectId] = []e.GameObject{e.NewBasicEnemy(200, 300), e.NewShootyEnemy(100, 100)}
+	d.objects[e.EnemiesObjectId] = []e.GameObject{
+		e.NewBasicEnemy(200, 300, 0.7),
+		e.NewBasicEnemy(200, 300, 1),
+		e.NewShootyEnemy(100, 100),
+	}
 	d.objects[e.EnemyProjectilesObjectId] = []e.GameObject{}
 	d.objects[e.PlayerProjectilesObjectId] = []e.GameObject{}
 	d.objects[e.StaticsObjectId] = []e.GameObject{
