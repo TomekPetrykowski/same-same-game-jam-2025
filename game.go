@@ -16,9 +16,8 @@ type Game struct {
 
 func NewGame() *Game {
 	sceneMap := Scenes{
-		scenes.PlayerTestSceneId: scenes.NewPlayerTestScene(),
-		scenes.DebugSceneId:      scenes.NewDebugScene(),
-		scenes.TestLevelSceneId:  scenes.NewTestLevelScene(),
+		scenes.DebugSceneId:     scenes.NewDebugScene(),
+		scenes.TestLevelSceneId: scenes.NewTestLevelScene(),
 	}
 
 	activeSceneId := scenes.TestLevelSceneId
