@@ -16,7 +16,7 @@ type Game struct {
 
 func NewGame() *Game {
 	sceneMap := Scenes{
-		scenes.DebugSceneId:     scenes.NewDebugScene(),
+		// scenes.DebugSceneId:     scenes.NewDebugScene(),
 		scenes.TestLevelSceneId: scenes.NewTestLevelScene(),
 	}
 
@@ -65,6 +65,6 @@ func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeigh
 
 func (g *Game) Set() {
 	fmt.Println("Game is running!")
-	ebiten.SetWindowSize(640, 480)
+	ebiten.SetWindowSize(960, 720)
 	ebiten.SetWindowTitle("Hello, World!")
 }
