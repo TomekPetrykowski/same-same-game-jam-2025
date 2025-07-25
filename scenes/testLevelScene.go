@@ -2,6 +2,7 @@ package scenes
 
 import (
 	e "game/entities"
+
 	spritesheet "game/spritesheets"
 	"game/utils/images"
 	"image/color"
@@ -10,14 +11,18 @@ import (
 )
 
 type TestLevelScene struct {
+
 	loaded            bool
 	player            *e.Player
-	playerSpriteSheet *spritesheet.Spritesheet
 	objects           map[e.SceneObject][]e.GameObject
 }
 
 func (s *TestLevelScene) GetObjects() *map[e.SceneObject][]e.GameObject {
 	return &s.objects
+}
+
+func (s *TestLevelScene) AddObject(key string, object e.GameObject) {
+	s.objects[key] = append(s.objects[key], object)
 }
 
 func NewTestLevelScene() *TestLevelScene {
@@ -43,7 +48,7 @@ func (d *TestLevelScene) FirstLoad() {
 	//read level data
 	d.objects = make(map[e.SceneObject][]e.GameObject)
 	d.objects[e.PlayerObjectId] = []e.GameObject{d.player}
-	d.objects[e.EnemiesObjectId] = []e.GameObject{}
+	d.objects[e.EnemiesObjectId] = []e.GameObject{e.NewBasicEnemy(200, 300), e.NewShootyEnemy(100, 100)}
 	d.objects[e.EnemyProjectilesObjectId] = []e.GameObject{}
 	d.objects[e.PlayerProjectilesObjectId] = []e.GameObject{}
 	d.objects[e.StaticsObjectId] = []e.GameObject{
@@ -73,7 +78,12 @@ func (d *TestLevelScene) Draw(screen *ebiten.Image) {
 }
 
 func (d *TestLevelScene) Update() SceneId {
-	d.player.Update(d)
+	for _, list := range d.objects {
+		for _, o := range list {
+			o.Update(d)
+		}
+	}
+	// d.player.Update(d)
 	return TestLevelSceneId
 }
 

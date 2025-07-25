@@ -74,7 +74,7 @@ func (v Vec) Angle() float64 {
 }
 
 func (v Vec) DirectionTo(v2 Vec) Vec {
-	return (v.Added(v2.Inverted())).Normalized()
+	return (v2.Added(v.Inverted())).Normalized()
 }
 
 func (v Vec) Times(a float64) Vec {

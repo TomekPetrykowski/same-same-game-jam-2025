@@ -143,7 +143,7 @@ func (r *Rect) CollideAndSlideCircle(c Circle) {
 	if c.Pos.DistanceTo(pos2) < c.Radius {
 		norm := pos2.DirectionTo(c.Pos)
 		diff := c.Radius - (c.Pos.Added(pos2.Inverted())).Length()
-		r.Pos.Add(norm.Multiplied(diff))
+		r.Pos.Add(norm.Multiplied(-diff))
 	}
 }
 
@@ -165,7 +165,7 @@ func (c *Circle) CollideAndSlideRect(r Rect) {
 	if c.Pos.DistanceTo(pos2) < c.Radius {
 		norm := c.Pos.DirectionTo(pos2)
 		diff := c.Radius - (c.Pos.Added(pos2.Inverted())).Length()
-		c.Pos.Add(norm.Multiplied(diff))
+		c.Pos.Add(norm.Multiplied(-diff))
 	}
 }
 
@@ -173,7 +173,7 @@ func (c *Circle) CollideAndSlideCircle(c2 Circle) {
 	if c.CollidesWithCircle(c2) {
 		norm := c.Pos.DirectionTo(c2.Pos)
 		diff := (c.Radius + c2.Radius) - (c.Pos.Added(c2.Pos.Inverted())).Length()
-		c.Pos.Add(norm.Multiplied(diff))
+		c.Pos.Add(norm.Multiplied(-diff))
 	}
 }
 

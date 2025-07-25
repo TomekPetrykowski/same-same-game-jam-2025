@@ -14,6 +14,7 @@ const (
 
 type Scene interface {
 	GetObjects() *map[SceneObject][]GameObject
+  AddObject(SceneObject, GameObject)
 }
 
 type GameObject interface {

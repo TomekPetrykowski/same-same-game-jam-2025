@@ -23,6 +23,7 @@ type Player struct {
 	Vel         v.Vec
 	Animations  map[State]*anim.Animation
 	Spritesheet *spritesheet.Spritesheet
+
 }
 
 func (p *Player) ActiveAnimation() *anim.Animation {
@@ -83,7 +84,6 @@ func (p *Player) GetCurrentImage() *ebiten.Image {
 }
 
 func NewPlayer(initX, initY float64) *Player {
-
 	playerImg := images.LoadImage(
 		"assets/player.png",
 		"Error while loading player image.",
