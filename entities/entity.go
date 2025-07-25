@@ -14,6 +14,7 @@ type Entity struct {
 
 type Scene interface {
 	GetObjects() *map[string][]GameObject
+	AddObject(string, GameObject)
 }
 
 func (e *Entity) Update(scene Scene) {
