@@ -18,6 +18,10 @@ func (s *TestLevelScene) GetObjects() *map[string][]e.GameObject {
 	return &s.objects
 }
 
+func (s *TestLevelScene) AddObject(key string, object e.GameObject) {
+	s.objects[key] = append(s.objects[key], object)
+}
+
 func NewTestLevelScene() *TestLevelScene {
 
 	return &TestLevelScene{
@@ -30,7 +34,7 @@ func (d *TestLevelScene) FirstLoad() {
 	//read level data
 	d.objects = make(map[string][]e.GameObject)
 	d.objects["player"] = []e.GameObject{d.player}
-	d.objects["enemies"] = []e.GameObject{}
+	d.objects["enemies"] = []e.GameObject{e.NewBasicEnemy(200, 300), e.NewShootyEnemy(100, 100)}
 	d.objects["enemyProjectiles"] = []e.GameObject{}
 	d.objects["playerProjectiles"] = []e.GameObject{}
 	d.objects["staticObjects"] = []e.GameObject{e.NewEntity(e.NewRect(200, 200, 20, 20)), e.NewEntity(e.NewRect(200, 100, 20, 20))}
@@ -51,7 +55,12 @@ func (d *TestLevelScene) Draw(screen *ebiten.Image) {
 }
 
 func (d *TestLevelScene) Update() SceneId {
-	d.player.Update(d)
+	for _, list := range d.objects {
+		for _, o := range list {
+			o.Update(d)
+		}
+	}
+	// d.player.Update(d)
 	return TestLevelSceneId
 }
 

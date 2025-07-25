@@ -9,6 +9,10 @@ type Entity struct {
 	Sprite   *Sprite
 }
 
+type Scene interface {
+	GetObjects() *map[string][]GameObject
+  AddObject(string, GameObject)
+}
 func NewEntity(collider CollidingType, sprite *Sprite) *Entity {
 	return &Entity{
 		Collider: collider,
