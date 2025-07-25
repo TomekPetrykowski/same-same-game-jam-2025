@@ -19,10 +19,9 @@ const (
 
 type Player struct {
 	Entity
-	FacingUp    bool
-	Vel         v.Vec
-	Animations  map[State]*animations.Animation
-	SpriteSheet s.SpriteSheet
+	FacingUp   bool
+	Vel        v.Vec
+	Animations map[State]*animations.Animation
 }
 
 func (p *Player) ActiveAnimation() *animations.Animation {
@@ -72,7 +71,7 @@ func (p *Player) GetImage() *ebiten.Image {
 
 	p.ActiveAnimation().Update()
 
-	return (p.Entity.Sprite.Img.SubImage(p.SpriteSheet.Rect(p.ActiveAnimation().Frame()))).(*ebiten.Image)
+	return (p.Entity.Sprite.Img.SubImage(s.DB[s.PlayerSpritesheedId].Rect(p.ActiveAnimation().Frame()))).(*ebiten.Image)
 
 }
 
@@ -86,10 +85,9 @@ func NewPlayer(x, y float64) *Player {
 		Up:   animations.NewAnimation(3, 5, 2, 20.0),
 		Down: animations.NewAnimation(2, 4, 2, 20.0),
 	}
-	ent := *NewEntity(NewCircle(x, y, 5))
+	ent := *NewEntity(NewCircle(x, y, 5), &Sprite{Img: sprite})
 	// img := ebiten.NewImage(20, 20)
 	// img.Fill(color.White)
 	// ent.Sprite.Img = img
-	ent.Sprite = &Sprite{Img: sprite}
-	return &Player{Entity: ent, Animations: animations, SpriteSheet: *s.NewSpriteSheet(2, 3, 15, 26)}
+	return &Player{Entity: ent, Animations: animations}
 }

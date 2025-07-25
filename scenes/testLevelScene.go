@@ -2,16 +2,14 @@ package scenes
 
 import (
 	e "game/entities"
-	s "game/spritesheets"
 
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
 type TestLevelScene struct {
-	loaded            bool
-	player            *e.Player
-	playerSpriteSheet *s.SpriteSheet
-	objects           map[string][]e.GameObject
+	loaded  bool
+	player  *e.Player
+	objects map[string][]e.GameObject
 }
 
 func (s *TestLevelScene) GetObjects() *map[string][]e.GameObject {
@@ -37,7 +35,7 @@ func (d *TestLevelScene) FirstLoad() {
 	d.objects["enemies"] = []e.GameObject{e.NewBasicEnemy(200, 300), e.NewShootyEnemy(100, 100)}
 	d.objects["enemyProjectiles"] = []e.GameObject{}
 	d.objects["playerProjectiles"] = []e.GameObject{}
-	d.objects["staticObjects"] = []e.GameObject{e.NewEntity(e.NewRect(200, 200, 20, 20)), e.NewEntity(e.NewRect(200, 100, 20, 20))}
+	d.objects["staticObjects"] = []e.GameObject{e.NewEntity(e.NewRect(200, 200, 20, 20), nil), e.NewEntity(e.NewRect(200, 100, 20, 20), nil)}
 }
 
 func (d *TestLevelScene) IsLoaded() bool {

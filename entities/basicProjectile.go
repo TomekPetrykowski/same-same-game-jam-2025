@@ -29,7 +29,7 @@ func (p BasicProjectile) Update(scene Scene) {
 }
 
 func NewBasicProjectile(x, y, speed float64, direction v.Vec) *BasicProjectile {
-	ent := NewEntity(NewCircle(x, y, 3))
+	ent := NewEntity(NewCircle(x, y, 3), nil)
 	return &BasicProjectile{Entity: *ent, Speed: speed, Direction: direction, LiveLength: 120}
 
 }

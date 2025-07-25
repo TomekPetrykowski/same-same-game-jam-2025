@@ -23,6 +23,6 @@ func (e *ShootyEnemy) Update(scene Scene) {
 }
 
 func NewShootyEnemy(x, y float64) *ShootyEnemy {
-	ent := NewEntity(NewCircle(x, y, 10))
+	ent := NewEntity(NewCircle(x, y, 10), nil)
 	return &ShootyEnemy{Entity: *ent, Cooldown: 1}
 }
