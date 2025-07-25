@@ -27,7 +27,7 @@ type Player struct {
 
 func (p *Player) ActiveAnimation() *anim.Animation {
 
-	if dx, dy := p.Vel.Unpack(); dx == 0 && dy == 0 {
+	if p.Vel.IsZero() {
 		return p.Animations[Idle]
 	}
 
@@ -47,7 +47,7 @@ func (p *Player) Update(scene Scene) {
 	// Moved updating animation in releveant method
 	p.ActiveAnimation().Update()
 
-	p.Vel = v.Vec{}
+	p.Vel.Reset()
 	if ebiten.IsKeyPressed(ebiten.KeyA) {
 		p.Vel.X -= 1
 	}

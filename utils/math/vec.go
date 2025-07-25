@@ -52,13 +52,27 @@ func (v Vec) String() string {
 
 func (v *Vec) Normalize() {
 	l := v.Length()
-	v.X /= l
-	v.Y /= l
+	if l != 0 {
+		v.X /= l
+		v.Y /= l
+	}
 }
 
 func (v Vec) Normalized() Vec {
+	if v.IsZero() {
+		return Vec{}
+	}
 	l := v.Length()
 	return Vec{v.X / l, v.Y / l}
+}
+
+func (v *Vec) Reset() {
+	v.X = 0
+	v.Y = 0
+}
+
+func (v Vec) IsZero() bool {
+	return (v.X == 0 && v.Y == 0)
 }
 
 func (v Vec) DistanceTo(v2 Vec) float64 {
