@@ -40,7 +40,7 @@ func (p *Player) ActiveAnimation() *anim.Animation {
 
 func (p *Player) Draw(screen *ebiten.Image) {
 	DrawCollider(p.Collider, screen)
-	DrawSprite(screen, p.GetCurrentImage(), *p.Entity.Collider.GetPos(), v.Vec{X: -7.5, Y: -20})
+	DrawSprite(screen, p.GetCurrentImage(), *p.Entity.Collider.GetPos(), p.Sprite.Offset)
 }
 
 func (p *Player) Update(scene Scene) {
@@ -96,12 +96,12 @@ func NewPlayer(initX, initY float64) *Player {
 		Idle: anim.DB[anim.PlayerIdleId],
 	}
 
-	sprite := Sprite{Img: playerImg}
+	sprite := Sprite{Img: playerImg, Offset: v.Vec{X: -7.5, Y: -20}}
 	ent := NewEntity(NewCircle(initX, initY, 5), &sprite)
 
 	return &Player{
 		Entity:      ent,
 		Animations:  animations,
-		Spritesheet: spritesheet.DB[spritesheet.PlayerSpritesheedId],
+		Spritesheet: spritesheet.DB[spritesheet.PlayerSpritesheetId],
 	}
 }
