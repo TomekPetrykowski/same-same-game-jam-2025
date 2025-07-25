@@ -1,19 +1,19 @@
 package entities
 
 import (
-	v "game/utils/math"
-
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
 type Entity struct {
-	Pos      v.Vec
 	Collider CollidingType
 	Sprite   *Sprite
 }
 
-type Scene interface {
-	GetObjects() *map[string][]GameObject
+func NewEntity(collider CollidingType, sprite *Sprite) *Entity {
+	return &Entity{
+		Collider: collider,
+		Sprite:   sprite,
+	}
 }
 
 func (e *Entity) Update(scene Scene) {
@@ -32,17 +32,13 @@ func (e *Entity) Draw(screen *ebiten.Image) {
 		DrawCollider(e.Collider, screen)
 
 	} else {
-		opts := &ebiten.DrawImageOptions{}
+		opts := ebiten.DrawImageOptions{}
 		opts.GeoM.Translate(e.Collider.GetPos().Unpack())
-		screen.DrawImage(e.Sprite.Img, opts)
+		screen.DrawImage(e.Sprite.Img, &opts)
 	}
 
 }
 
 func (e *Entity) GetCollider() *CollidingType {
 	return &e.Collider
-}
-
-func NewEntity(ct CollidingType) *Entity {
-	return &Entity{Collider: ct}
 }
