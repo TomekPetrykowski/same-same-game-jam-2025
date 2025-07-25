@@ -2,9 +2,12 @@ package entities
 
 import (
 	"game/animations"
+	s "game/spritesheets"
 	v "game/utils/math"
+	"log"
 
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
 type State uint8
@@ -16,12 +19,14 @@ const (
 
 type Player struct {
 	Entity
-	FacingUp   bool
-	Vel        v.Vec
-	Animations map[State]*animations.Animation
+	FacingUp    bool
+	Vel         v.Vec
+	Animations  map[State]*animations.Animation
+	SpriteSheet s.SpriteSheet
 }
 
 func (p *Player) ActiveAnimation() *animations.Animation {
+
 	if p.FacingUp {
 		return p.Animations[Up]
 	} else {
@@ -31,7 +36,8 @@ func (p *Player) ActiveAnimation() *animations.Animation {
 }
 
 func (p *Player) Draw(screen *ebiten.Image) {
-	p.Entity.Draw(screen)
+	DrawCollider(p.Collider, screen)
+	DrawSprite(screen, p.GetImage(), *p.Entity.Collider.GetPos(), v.Vec{X: -7.5, Y: -20})
 }
 
 func (p *Player) Update(scene Scene) {
@@ -50,6 +56,11 @@ func (p *Player) Update(scene Scene) {
 		vel.Y += 1
 	}
 	p.Collider.GetPos().Add(vel)
+	if vel.Y < 0 {
+		p.FacingUp = true
+	} else if vel.Y > 0 {
+		p.FacingUp = false
+	}
 
 	for _, o := range (*scene.GetObjects())["staticObjects"] {
 		p.Collider.CollideAndSlide(*o.GetCollider())
@@ -57,10 +68,28 @@ func (p *Player) Update(scene Scene) {
 
 }
 
-func (p *Player) GetImage() {
-	p.ActiveAnimation().Update()
-	p.ActiveAnimation().Frame()
+func (p *Player) GetImage() *ebiten.Image {
 
-	// spritesheet := NewSpriteSheet(2, 3, 15, 26)
-	// spritesheet.Rect()
+	p.ActiveAnimation().Update()
+
+	return (p.Entity.Sprite.Img.SubImage(p.SpriteSheet.Rect(p.ActiveAnimation().Frame()))).(*ebiten.Image)
+
+}
+
+func NewPlayer(x, y float64) *Player {
+	sprite, _, err := ebitenutil.NewImageFromFile("assets/player.png")
+	if err != nil {
+		// handle error
+		log.Fatal(err)
+	}
+	animations := map[State]*animations.Animation{
+		Up:   animations.NewAnimation(3, 5, 2, 20.0),
+		Down: animations.NewAnimation(2, 4, 2, 20.0),
+	}
+	ent := *NewEntity(NewCircle(x, y, 5))
+	// img := ebiten.NewImage(20, 20)
+	// img.Fill(color.White)
+	// ent.Sprite.Img = img
+	ent.Sprite = &Sprite{Img: sprite}
+	return &Player{Entity: ent, Animations: animations, SpriteSheet: *s.NewSpriteSheet(2, 3, 15, 26)}
 }
