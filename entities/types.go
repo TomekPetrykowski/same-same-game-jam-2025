@@ -2,10 +2,10 @@ package entities
 
 import "github.com/hajimehoshi/ebiten/v2"
 
-type SceneObject uint
+type SceneObjectId uint
 
 const (
-	PlayerObjectId SceneObject = iota
+	PlayerObjectId SceneObjectId = iota
 	EnemiesObjectId
 	EnemyProjectilesObjectId
 	PlayerProjectilesObjectId
@@ -13,12 +13,12 @@ const (
 )
 
 type Scene interface {
-	GetObjects() *map[SceneObject][]GameObject
-  AddObject(SceneObject, GameObject)
+	GetObjects() *map[SceneObjectId][]GameObject
+	AddObject(SceneObjectId, GameObject)
 }
 
 type GameObject interface {
-	GetCollider() *CollidingType
+	GetCollider() CollidingType
 	Update(Scene)
 	Draw(*ebiten.Image)
 }

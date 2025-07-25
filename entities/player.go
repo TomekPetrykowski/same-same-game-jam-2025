@@ -23,7 +23,6 @@ type Player struct {
 	Vel         v.Vec
 	Animations  map[State]*anim.Animation
 	Spritesheet *spritesheet.Spritesheet
-
 }
 
 func (p *Player) ActiveAnimation() *anim.Animation {
@@ -68,8 +67,9 @@ func (p *Player) Update(scene Scene) {
 		p.FacingUp = false
 	}
 
-	for _, o := range (*scene.GetObjects())[StaticsObjectId] {
-		p.Collider.CollideAndSlide(*o.GetCollider())
+	sceneObjects := *scene.GetObjects()
+	for _, o := range sceneObjects[StaticsObjectId] {
+		p.Collider.CollideAndSlide(o.GetCollider())
 	}
 
 }

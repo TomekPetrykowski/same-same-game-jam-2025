@@ -33,6 +33,6 @@ func (e *Entity) Draw(screen *ebiten.Image) {
 
 }
 
-func (e *Entity) GetCollider() *CollidingType {
-	return &e.Collider
+func (e *Entity) GetCollider() CollidingType {
+	return e.Collider
 }
