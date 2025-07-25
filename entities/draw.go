@@ -1,6 +1,7 @@
 package entities
 
 import (
+	"image"
 	"image/color"
 
 	"github.com/hajimehoshi/ebiten/v2"
@@ -37,4 +38,9 @@ func DrawCollider(ct CollidingType, screen *ebiten.Image) {
 		DrawCircle(*c, screen)
 	}
 
+}
+
+// Wrapper for casting subimage to ebiten.Image
+func SubImage(sprite *Sprite, img image.Rectangle) *ebiten.Image {
+	return sprite.Img.SubImage(img).(*ebiten.Image)
 }

@@ -37,8 +37,6 @@ func NewTestLevelScene() *TestLevelScene {
 			Entity: entities.Entity{
 				Sprite: &entities.Sprite{
 					Img: playerImg,
-					X:   50.0,
-					Y:   50.0,
 				},
 				Collider: &e.Circle{Pos: v.Vec{X: 0, Y: 0}, Radius: 10},
 			},
