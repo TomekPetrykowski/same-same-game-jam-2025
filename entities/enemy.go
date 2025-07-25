@@ -26,6 +26,6 @@ func (e *BasicEnemy) Update(scene Scene) {
 }
 
 func NewBasicEnemy(x, y float64) *BasicEnemy {
-	ent := NewEntity(NewCircle(x, y, 10))
+	ent := NewEntity(NewCircle(x, y, 10), nil)
 	return &BasicEnemy{Entity: *ent}
 }
