@@ -11,10 +11,10 @@ import (
 
 type BombHead struct {
 	*Entity
-	Hp          float64
+	Hp          int
 	Speed       float64
 	BlastRadius float64
-	Fuse        float64
+	Fuse        int
 	Exploding   bool
 	// Animation   anim.Animation
 	Animations map[State]*anim.Animation
@@ -22,6 +22,13 @@ type BombHead struct {
 
 func (e *BombHead) ActiveAnimation() *anim.Animation {
 	return e.Animations[Down]
+
+}
+func (e *BombHead) Hit(damage int) {
+	e.Hp -= damage
+	if e.Hp <= 0 {
+		e.Entity.deleted = true
+	}
 }
 
 func (e *BombHead) Update(scene Scene) {
@@ -30,7 +37,7 @@ func (e *BombHead) Update(scene Scene) {
 		player := sceneObjects[PlayerObjectId][0]
 		playerPos := player.GetCollider().GetPos()
 		e.ActiveAnimation().Update()
-		if e.Collider.GetPos().DistanceTo(*playerPos) <= 10 {
+		if e.Collider.GetPos().DistanceTo(*playerPos) <= 15 {
 			e.Exploding = true
 		}
 		e.Collider.GetPos().Add(e.Collider.GetPos().DirectionTo(*playerPos).Multiplied(e.Speed))
@@ -39,7 +46,7 @@ func (e *BombHead) Update(scene Scene) {
 			e.Collider.CollideAndSlide(o.GetCollider())
 		}
 	} else {
-		e.Fuse -= 0.01
+		e.Fuse -= 1
 		if e.Fuse <= 0 {
 			e.deleted = true
 			scene.AddObject(
@@ -51,8 +58,8 @@ func (e *BombHead) Update(scene Scene) {
 }
 
 func (e *BombHead) Draw(screen *ebiten.Image) {
-	DrawCollider(e.Collider, screen)
 	DrawSprite(screen, e.GetCurrentImage(), *e.Entity.Collider.GetPos(), e.Sprite.Offset)
+	DrawCollider(e.Collider, screen)
 }
 
 func (e *BombHead) GetCurrentImage() *ebiten.Image {
@@ -78,5 +85,5 @@ func NewBombHead(x, y float64) *BombHead {
 	}
 
 	sprite := Sprite{Img: bombheadImg, Offset: v.Vec{X: -8.5, Y: -22}}
-	return &BombHead{Entity: NewEntity(NewCircle(x, y, 5), &sprite), Speed: 1, Animations: animations, Fuse: 1}
+	return &BombHead{Entity: NewEntity(NewCircle(x, y, 5), &sprite), Speed: 1, Animations: animations, Fuse: 30, Hp: 3}
 }

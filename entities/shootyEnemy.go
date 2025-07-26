@@ -3,6 +3,7 @@ package entities
 type ShootyEnemy struct {
 	*Entity
 	Cooldown float64
+	Hp       int
 	// Speed     float64
 	// Direction v.Vec
 }
@@ -10,6 +11,13 @@ type ShootyEnemy struct {
 func NewShootyEnemy(x, y float64) *ShootyEnemy {
 	ent := NewEntity(NewCircle(x, y, 10), nil)
 	return &ShootyEnemy{Entity: ent, Cooldown: 1}
+}
+
+func (se *ShootyEnemy) Hit(damage int) {
+	se.Hp -= damage
+	if se.Hp <= 0 {
+		se.Entity.deleted = true
+	}
 }
 
 func (se *ShootyEnemy) Update(scene Scene) {

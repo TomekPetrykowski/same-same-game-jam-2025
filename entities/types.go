@@ -1,6 +1,8 @@
 package entities
 
-import "github.com/hajimehoshi/ebiten/v2"
+import (
+	"github.com/hajimehoshi/ebiten/v2"
+)
 
 type SceneObjectId uint
 type ObjectsMap map[SceneObjectId][]GameObject
@@ -23,4 +25,5 @@ type GameObject interface {
 	Update(Scene)
 	Draw(*ebiten.Image)
 	IsDeleted() bool
+	Hit(damage int)
 }
