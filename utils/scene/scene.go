@@ -5,7 +5,7 @@ import (
 	"sort"
 )
 
-func GetSortedObjects(objects *map[entities.SceneObjectId][]entities.GameObject) *[]entities.GameObject {
+func GetSortedObjects(objects *entities.ObjectsMap) *[]entities.GameObject {
 	var allObjectsLen = 0
 	for _, slice := range *objects {
 		allObjectsLen += len(slice)

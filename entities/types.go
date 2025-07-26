@@ -3,6 +3,7 @@ package entities
 import "github.com/hajimehoshi/ebiten/v2"
 
 type SceneObjectId uint
+type ObjectsMap map[SceneObjectId][]GameObject
 
 const (
 	PlayerObjectId SceneObjectId = iota
@@ -13,7 +14,7 @@ const (
 )
 
 type Scene interface {
-	GetObjects() *map[SceneObjectId][]GameObject
+	GetObjects() *ObjectsMap
 	AddObject(SceneObjectId, GameObject)
 }
 
