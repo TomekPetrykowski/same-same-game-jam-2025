@@ -12,14 +12,13 @@ type BasicProjectile struct {
 	LiveLength int
 }
 
-func (bp BasicProjectile) Update(scene Scene) {
+func (bp *BasicProjectile) Update(scene Scene) {
 	sceneObjects := *scene.GetObjects()
 	player := sceneObjects[PlayerObjectId][0]
 
 	bp.LiveLength -= 1
 	if bp.LiveLength <= 0 {
 		bp.deleted = true
-		return
 	}
 
 	// Move the projectile
@@ -28,12 +27,10 @@ func (bp BasicProjectile) Update(scene Scene) {
 	if bp.Collider.CollidesWith(player.GetCollider()) {
 		fmt.Println("Player hit")
 		bp.deleted = true
-		return
 	}
 	for _, obj := range sceneObjects[StaticsObjectId] {
 		if bp.Collider.CollidesWith(obj.GetCollider()) {
 			bp.deleted = true
-			return
 		}
 	}
 }
