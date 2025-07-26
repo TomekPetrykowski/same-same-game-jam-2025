@@ -58,7 +58,7 @@ func (e *BombHead) Draw(screen *ebiten.Image) {
 func (e *BombHead) GetCurrentImage() *ebiten.Image {
 	return images.SubImage(
 		e.Entity.Sprite.Img,
-		spritesheets.DB[spritesheets.BombHeadSpritesheetId].Rect(
+		spritesheets.DB[spritesheets.BombheadSpritesheetId].Rect(
 			e.ActiveAnimation().Frame(),
 		),
 	)

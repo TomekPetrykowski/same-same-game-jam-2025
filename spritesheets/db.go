@@ -3,9 +3,9 @@ package spritesheets
 type SpritesheetId uint
 
 const (
-	PlayerSpritesheetd SpritesheetId = iota
-	BombheadSpritesheetd
-	BirdmanSpritesheetd
+	PlayerSpritesheetId SpritesheetId = iota
+	BombheadSpritesheetId
+	BirdmanSpritesheetId
 	BoneyknightSpritesheetId
 )
 
