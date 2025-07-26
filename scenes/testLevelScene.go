@@ -2,6 +2,7 @@ package scenes
 
 import (
 	e "game/entities"
+	"slices"
 
 	"game/utils/images"
 	"image/color"
@@ -12,6 +13,7 @@ import (
 type TestLevelScene struct {
 	loaded  bool
 	player  *e.Player
+	deleted []e.GameObject
 	objects map[e.SceneObjectId][]e.GameObject
 }
 
@@ -48,6 +50,7 @@ func (d *TestLevelScene) FirstLoad() {
 	d.objects[e.PlayerObjectId] = []e.GameObject{d.player}
 	d.objects[e.EnemiesObjectId] = []e.GameObject{
 		e.NewBombHead(100, 100),
+		e.NewShootyEnemy(140, 140),
 	}
 	d.objects[e.EnemyProjectilesObjectId] = []e.GameObject{}
 	d.objects[e.PlayerProjectilesObjectId] = []e.GameObject{}
@@ -81,6 +84,16 @@ func (d *TestLevelScene) Update() SceneId {
 	for _, list := range d.objects {
 		for _, o := range list {
 			o.Update(d)
+		}
+	}
+
+	for key, list := range d.objects {
+		for i := 0; i < len(d.objects[key]); {
+			if list[i].IsDeleted() {
+				d.objects[key] = slices.Delete(d.objects[key], i, i+1)
+			} else {
+				i++
+			}
 		}
 	}
 	// d.player.Update(d)

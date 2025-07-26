@@ -41,6 +41,7 @@ func (e *BombHead) Update(scene Scene) {
 	} else {
 		e.Fuse -= 0.01
 		if e.Fuse <= 0 {
+			e.deleted = true
 			scene.AddObject(
 				EnemyProjectilesObjectId,
 				NewExplosion(e.Collider.GetPos().Unpack()),
