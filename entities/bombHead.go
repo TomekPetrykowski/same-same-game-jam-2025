@@ -47,7 +47,6 @@ func (e *BombHead) Update(scene Scene) {
 			)
 		}
 	}
-
 }
 
 func (e *BombHead) Draw(screen *ebiten.Image) {

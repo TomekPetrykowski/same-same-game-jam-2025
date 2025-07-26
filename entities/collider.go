@@ -10,6 +10,7 @@ type CollidingType interface {
 	CollideAndSlide(CollidingType)
 	GetPos() *v.Vec
 	SetPos(v.Vec)
+	GetYForDrawing() float64
 }
 
 type Rect struct {
@@ -39,6 +40,14 @@ func (c *Circle) SetPos(v v.Vec) {
 func (r *Rect) SetPos(v v.Vec) {
 	r.Pos.X = v.X
 	r.Pos.Y = v.Y
+}
+
+func (c *Circle) GetYForDrawing() float64 {
+	return c.Pos.Y - c.Radius
+}
+
+func (r *Rect) GetYForDrawing() float64 {
+	return r.Pos.Y
 }
 
 func (c *Circle) CollidesWith(ct CollidingType) bool {

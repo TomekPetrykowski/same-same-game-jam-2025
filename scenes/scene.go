@@ -11,6 +11,7 @@ const (
 	PlayerTestSceneId
 	DebugSceneId
 	TestLevelSceneId
+	SortingSpritesSceneId
 )
 
 type Scene interface {
