@@ -13,8 +13,7 @@ import (
 type TestLevelScene struct {
 	loaded  bool
 	player  *e.Player
-	deleted []e.GameObject
-	objects map[e.SceneObjectId][]e.GameObject
+	objects e.ObjectsMap
 }
 
 func NewTestLevelScene() *TestLevelScene {
@@ -25,7 +24,7 @@ func NewTestLevelScene() *TestLevelScene {
 	}
 }
 
-func (s *TestLevelScene) GetObjects() *map[e.SceneObjectId][]e.GameObject {
+func (s *TestLevelScene) GetObjects() *e.ObjectsMap {
 	return &s.objects
 }
 
@@ -46,7 +45,7 @@ func (d *TestLevelScene) FirstLoad() {
 	}
 
 	//read level data
-	d.objects = make(map[e.SceneObjectId][]e.GameObject)
+	d.objects = make(e.ObjectsMap)
 	d.objects[e.PlayerObjectId] = []e.GameObject{d.player}
 	d.objects[e.EnemiesObjectId] = []e.GameObject{
 		e.NewBombHead(100, 100),

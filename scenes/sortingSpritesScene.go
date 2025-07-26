@@ -12,7 +12,7 @@ import (
 type SortingSpritesScene struct {
 	loaded  bool
 	player  *e.Player
-	objects map[e.SceneObjectId][]e.GameObject
+	objects e.ObjectsMap
 }
 
 func NewSortingSpritesScene() *SortingSpritesScene {
@@ -78,7 +78,7 @@ func (s *SortingSpritesScene) OnExit() {
 
 }
 
-func (s *SortingSpritesScene) GetObjects() *map[e.SceneObjectId][]e.GameObject {
+func (s *SortingSpritesScene) GetObjects() *e.ObjectsMap {
 	return &s.objects
 }
 

@@ -20,9 +20,10 @@ func NewGame() *Game {
 		// scenes.DebugSceneId:     scenes.NewDebugScene(),
 		scenes.TestLevelSceneId:      scenes.NewTestLevelScene(),
 		scenes.SortingSpritesSceneId: scenes.NewSortingSpritesScene(),
+		scenes.StartSceneId:          scenes.NewStartScene(),
 	}
 
-	activeSceneId := scenes.TestLevelSceneId
+	activeSceneId := scenes.StartSceneId
 
 	sceneMap[activeSceneId].FirstLoad()
 
@@ -69,11 +70,12 @@ func (g *Game) Draw(screen *ebiten.Image) {
 }
 
 func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int) {
-	return 320, 240
+	return 640, 360
 }
 
 func (g *Game) Set() {
 	fmt.Println("Game is running!")
-	ebiten.SetWindowSize(960, 720)
-	ebiten.SetWindowTitle("Hello, World!")
+	ebiten.SetWindowSize(1280, 720)
+	ebiten.SetWindowTitle("Pothead")
+	ebiten.SetWindowResizingMode(ebiten.WindowResizingModeEnabled)
 }
