@@ -18,20 +18,22 @@ func (bp BasicProjectile) Update(scene Scene) {
 
 	bp.LiveLength -= 1
 	if bp.LiveLength <= 0 {
-		// TODO: destroy
+		bp.deleted = true
+		return
 	}
 
 	// Move the projectile
 	bp.Collider.GetPos().Add(bp.Direction.Multiplied(bp.Speed))
 
 	if bp.Collider.CollidesWith(player.GetCollider()) {
-		// print("player hit") // print outputs to standard error not to standard output
 		fmt.Println("Player hit")
+		bp.deleted = true
+		return
 	}
 	for _, obj := range sceneObjects[StaticsObjectId] {
 		if bp.Collider.CollidesWith(obj.GetCollider()) {
-			// print("Destroyed")
-			fmt.Println("Destroyed")
+			bp.deleted = true
+			return
 		}
 	}
 }

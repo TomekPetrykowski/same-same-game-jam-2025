@@ -7,6 +7,11 @@ import (
 type Entity struct {
 	Collider CollidingType
 	Sprite   *Sprite
+	deleted  bool
+}
+
+func (e *Entity) IsDeleted() bool {
+	return e.deleted
 }
 
 func NewEntity(collider CollidingType, sprite *Sprite) *Entity {

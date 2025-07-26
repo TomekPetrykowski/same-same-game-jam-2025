@@ -25,7 +25,7 @@ func (e *Explosion) Update(scene Scene) {
 
 	e.LiveLength -= 1
 	if e.LiveLength <= 0 {
-		// TODO: destroy
+		e.deleted = true
 	}
 
 	if e.Collider.CollidesWith(player.GetCollider()) {

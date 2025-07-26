@@ -21,4 +21,5 @@ type GameObject interface {
 	GetCollider() CollidingType
 	Update(Scene)
 	Draw(*ebiten.Image)
+	IsDeleted() bool
 }
