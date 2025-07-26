@@ -42,7 +42,7 @@ func (e *BombHead) Update(scene Scene) {
 
 func NewBombHead(x, y float64) *BombHead {
 	bombheadImg := images.LoadImage(
-		"assets/bombhead2.png",
+		"assets/bombhead.png",
 		"Error while loading player image.",
 		&images.DefaultPlaceholder,
 	)
