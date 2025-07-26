@@ -1,7 +1,6 @@
 package entities
 
 import (
-	"game/animations"
 	anim "game/animations"
 	"game/spritesheets"
 	"game/utils/images"
@@ -17,11 +16,11 @@ type BombHead struct {
 	BlastRadius float64
 	Fuse        float64
 	Exploding   bool
-	Animation   anim.Animation
+	Animation   *anim.Animation
 }
 
 func (e *BombHead) ActiveAnimation() *anim.Animation {
-	return animations.DB[animations.BombHeadDownId]
+	return e.Animation
 }
 
 func (e *BombHead) Update(scene Scene) {
@@ -46,8 +45,11 @@ func NewBombHead(x, y float64) *BombHead {
 		"Error while loading player image.",
 		&images.DefaultPlaceholder,
 	)
+
+	animation := anim.NewAnimation(anim.DB[anim.BombheadUpId])
+
 	sprite := Sprite{Img: bombheadImg, Offset: v.Vec{X: -8.5, Y: -22}}
-	return &BombHead{Entity: *NewEntity(NewCircle(x, y, 5), &sprite)}
+	return &BombHead{Entity: *NewEntity(NewCircle(x, y, 5), &sprite), Animation: animation}
 }
 
 func (e *BombHead) Draw(screen *ebiten.Image) {
