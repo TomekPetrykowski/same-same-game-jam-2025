@@ -17,6 +17,7 @@ type Explosion struct {
 
 func (e *Explosion) Draw(screen *ebiten.Image) {
 	DrawSprite(screen, e.Sprite.Img, *e.Collider.GetPos(), e.Sprite.Offset)
+	DrawCollider(e.Collider, screen)
 }
 
 func (e *Explosion) Update(scene Scene) {
@@ -29,7 +30,7 @@ func (e *Explosion) Update(scene Scene) {
 	}
 
 	if e.Collider.CollidesWith(player.GetCollider()) {
-		// print("player hit") // print outputs to standard error not to standard output
+		player.Hit(2)
 		fmt.Println("Player hit")
 	}
 }
@@ -40,7 +41,7 @@ func NewExplosion(x, y float64) *Explosion {
 		"Error while loading player image.",
 		&images.DefaultPlaceholder,
 	)
-	ent := NewEntity(NewCircle(x, y, 5), &Sprite{Img: img, Offset: v.Vec{X: -25, Y: -24.5}})
+	ent := NewEntity(NewCircle(x, y, 20), &Sprite{Img: img, Offset: v.Vec{X: -25, Y: -24.5}})
 	return &Explosion{Entity: ent, LiveLength: 60}
 
 }

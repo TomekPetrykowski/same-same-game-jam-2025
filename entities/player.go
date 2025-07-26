@@ -1,6 +1,7 @@
 package entities
 
 import (
+	"fmt"
 	anim "game/animations"
 	spritesheet "game/spritesheets"
 	"game/utils/images"
@@ -19,10 +20,24 @@ const (
 
 type Player struct {
 	*Entity
-	FacingUp    bool
-	Vel         v.Vec
-	Animations  map[State]*anim.Animation
-	Spritesheet *spritesheet.Spritesheet
+	FacingUp           bool
+	Vel                v.Vec
+	Animations         map[State]*anim.Animation
+	Spritesheet        *spritesheet.Spritesheet
+	ShootDelay         int
+	InvisibilityFrames int
+	Hp                 int
+}
+
+func (p *Player) Hit(damage int) {
+	if p.InvisibilityFrames <= 0 {
+		p.Hp -= damage
+		p.InvisibilityFrames = 60
+		if p.Hp <= 0 {
+			fmt.Println("player died")
+			//game over
+		}
+	}
 }
 
 func (p *Player) ActiveAnimation() *anim.Animation {
@@ -40,12 +55,18 @@ func (p *Player) ActiveAnimation() *anim.Animation {
 
 func (p *Player) Draw(screen *ebiten.Image) {
 	DrawCollider(p.Collider, screen)
-	DrawSprite(screen, p.GetCurrentImage(), *p.Entity.Collider.GetPos(), p.Sprite.Offset)
+	if p.InvisibilityFrames <= 0 || p.InvisibilityFrames%2 == 0 {
+		DrawSprite(screen, p.GetCurrentImage(), *p.Entity.Collider.GetPos(), p.Sprite.Offset)
+	}
+
 }
 
 func (p *Player) Update(scene Scene) {
 	// Moved updating animation in releveant method
 	p.ActiveAnimation().Update()
+	if p.InvisibilityFrames >= 0 {
+		p.InvisibilityFrames -= 1
+	}
 
 	p.Vel.Reset()
 	if ebiten.IsKeyPressed(ebiten.KeyA) {
@@ -60,11 +81,22 @@ func (p *Player) Update(scene Scene) {
 	if ebiten.IsKeyPressed(ebiten.KeyS) {
 		p.Vel.Y += 1
 	}
+	p.Vel.Normalize()
 	p.Collider.GetPos().Add(p.Vel)
 	if p.Vel.Y < 0 {
 		p.FacingUp = true
 	} else if p.Vel.Y > 0 {
 		p.FacingUp = false
+	}
+	if p.ShootDelay > 0 {
+		p.ShootDelay -= 1
+	}
+	if p.ShootDelay <= 0 && ebiten.IsMouseButtonPressed(ebiten.MouseButton0) {
+		p.ShootDelay = 30
+		x, y := ebiten.CursorPosition()
+		mousePos := v.Vec{X: float64(x), Y: float64(y)}
+		direction := p.Collider.GetPos().DirectionTo(mousePos)
+		scene.AddObject(PlayerProjectilesObjectId, NewPotProjectile(p.Collider.GetPos().X, p.Collider.GetPos().Y, 1.5, direction))
 	}
 
 	sceneObjects := *scene.GetObjects()
@@ -103,5 +135,6 @@ func NewPlayer(initX, initY float64) *Player {
 		Entity:      ent,
 		Animations:  animations,
 		Spritesheet: spritesheet.DB[spritesheet.PlayerSpritesheetId],
+		Hp:          3,
 	}
 }

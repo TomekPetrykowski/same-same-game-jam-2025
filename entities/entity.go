@@ -10,6 +10,9 @@ type Entity struct {
 	deleted  bool
 }
 
+func (e *Entity) Hit(damage int) {
+}
+
 func (e *Entity) IsDeleted() bool {
 	return e.deleted
 }
