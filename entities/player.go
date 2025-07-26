@@ -91,9 +91,9 @@ func NewPlayer(initX, initY float64) *Player {
 	)
 
 	animations := map[State]*anim.Animation{
-		Up:   anim.DB[anim.PlayerUpId],
-		Down: anim.DB[anim.PlayerDownId],
-		Idle: anim.DB[anim.PlayerIdleId],
+		Up:   anim.NewAnimation(anim.DB[anim.PlayerUpId]),
+		Down: anim.NewAnimation(anim.DB[anim.PlayerDownId]),
+		Idle: anim.NewAnimation(anim.DB[anim.PlayerIdleId]),
 	}
 
 	sprite := Sprite{Img: playerImg}

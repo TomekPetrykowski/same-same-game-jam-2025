@@ -14,14 +14,19 @@ const (
 	BirdmanIdleId
 )
 
-var DB = map[AnimationId]*Animation{
-	PlayerUpId:     NewAnimation(3, 5, 2, 10.0),
-	PlayerDownId:   NewAnimation(2, 4, 2, 10.0),
-	PlayerIdleId:   NewAnimation(0, 0, 0, 0.0),
-	BombheadUpId:   NewAnimation(3, 5, 2, 10.0),
-	BombheadDownId: NewAnimation(2, 4, 2, 10.0),
-	BombheadIdleId: NewAnimation(0, 0, 0, 0.0),
-	BirdmanUpId:    NewAnimation(0, 2, 2, 10.0),
-	BirdmanDownId:  NewAnimation(1, 3, 2, 10.0),
-	BirdmanIdleId:  NewAnimation(0, 0, 0, 0.0),
+type AnimationData struct {
+	First, Last, Step int
+	Speed             float32
+}
+
+var DB = map[AnimationId]*AnimationData{
+	PlayerUpId:     {First: 3, Last: 5, Step: 2, Speed: 10.0},
+	PlayerDownId:   {First: 2, Last: 4, Step: 2, Speed: 10.0},
+	PlayerIdleId:   {First: 0, Last: 0, Step: 0, Speed: 0.0},
+  BombheadUpId:   {First: 3, Last: 5, Step: 2, Speed: 10.0},
+  BombheadDownId: {First: 2, Last: 4, Step: 2, Speed: 10.0},
+  BombheadIdleId: {First: 0, Last: 0, Step: 0, Speed: 0.0},
+  BirdmanUpId:    {First: 0, Last: 2, Step: 2, Speed: 10.0},
+  BirdmanDownId:  {First: 1, Last: 3, Step: 2, Speed: 10.0},
+  BirdmanIdleId:  {First: 0, Last: 0, Step: 0, Speed: 0.0},
 }
