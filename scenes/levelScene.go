@@ -14,7 +14,7 @@ type LevelScene struct {
 	loaded     bool
 	deleted    []e.GameObject
 	background *ebiten.Image
-	objects    map[e.SceneObjectId][]e.GameObject
+	objects    e.ObjectsMap
 }
 
 func NewLevelScene() *LevelScene {
@@ -24,7 +24,7 @@ func NewLevelScene() *LevelScene {
 	}
 }
 
-func (s *LevelScene) GetObjects() *map[e.SceneObjectId][]e.GameObject {
+func (s *LevelScene) GetObjects() *e.ObjectsMap {
 	return &s.objects
 }
 
