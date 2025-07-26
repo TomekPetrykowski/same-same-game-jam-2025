@@ -76,9 +76,9 @@ func NewBasicEnemy(x, y, speed float64) *BasicEnemy {
 	)
 
 	animations := map[State]*anim.Animation{
-		Up:   anim.DB[anim.BombheadUpId],
-		Down: anim.DB[anim.BombheadDownId],
-		Idle: anim.DB[anim.BombheadIdleId],
+		Up:   anim.NewAnimation(anim.DB[anim.BombheadUpId]),
+		Down: anim.NewAnimation(anim.DB[anim.BombheadDownId]),
+		Idle: anim.NewAnimation(anim.DB[anim.BombheadIdleId]),
 	}
 
 	sprite := Sprite{Img: enemyImg}
