@@ -25,13 +25,13 @@ func (a *Animation) Frame() int {
 	return a.frame
 }
 
-func NewAnimation(first, last, step int, speed float32) *Animation {
+func NewAnimation(data *AnimationData) *Animation {
 	return &Animation{
-		first,
-		last,
-		step,
-		speed,
-		speed,
-		first,
+		data.First,
+		data.Last,
+		data.Step,
+		data.Speed,
+		data.Speed,
+		data.First,
 	}
 }
