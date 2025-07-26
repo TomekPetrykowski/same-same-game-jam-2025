@@ -35,3 +35,8 @@ func NewAnimation(data *AnimationData) *Animation {
 		data.First,
 	}
 }
+
+func (a *Animation) Reset() {
+	a.frameCounter = a.SpeedInTps
+	a.frame = a.First
+}

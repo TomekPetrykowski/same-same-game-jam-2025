@@ -47,9 +47,7 @@ func (d *TestLevelScene) FirstLoad() {
 	d.objects = make(map[e.SceneObjectId][]e.GameObject)
 	d.objects[e.PlayerObjectId] = []e.GameObject{d.player}
 	d.objects[e.EnemiesObjectId] = []e.GameObject{
-		e.NewBasicEnemy(200, 300, 0.7),
-		e.NewBasicEnemy(200, 300, 1),
-		e.NewShootyEnemy(100, 100),
+		e.NewBombHead(100, 100),
 	}
 	d.objects[e.EnemyProjectilesObjectId] = []e.GameObject{}
 	d.objects[e.PlayerProjectilesObjectId] = []e.GameObject{}

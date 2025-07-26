@@ -88,6 +88,6 @@ func NewBasicEnemy(x, y, speed float64) *BasicEnemy {
 		Entity:      ent,
 		Speed:       speed,
 		Animations:  animations,
-		Spritesheet: spritesheet.DB[spritesheet.BombheadSpritesheedId],
+		Spritesheet: spritesheet.DB[spritesheet.BombheadSpritesheetId],
 	}
 }
