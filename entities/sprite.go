@@ -1,7 +1,12 @@
 package entities
 
-import "github.com/hajimehoshi/ebiten/v2"
+import (
+	v "game/utils/math"
+
+	"github.com/hajimehoshi/ebiten/v2"
+)
 
 type Sprite struct {
-	Img *ebiten.Image
+	Offset v.Vec
+	Img    *ebiten.Image
 }
