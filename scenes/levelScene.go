@@ -8,6 +8,7 @@ import (
 	"game/utils/scene"
 
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/inpututil"
 )
 
 type LevelScene struct {
@@ -87,6 +88,10 @@ func (s *LevelScene) Draw(screen *ebiten.Image) {
 }
 
 func (d *LevelScene) Update() SceneId {
+	if inpututil.IsKeyJustPressed(ebiten.KeyP) {
+		return PauseSceneId
+	}
+
 	for _, list := range d.objects {
 		for _, o := range list {
 			o.Update(d)

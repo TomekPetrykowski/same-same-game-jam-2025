@@ -5,14 +5,10 @@ import "github.com/hajimehoshi/ebiten/v2"
 type SceneId uint
 
 const (
-	GameSceneId SceneId = iota
-	StartSceneId
+	StartSceneId SceneId = iota
 	ExitSceneId
-	PlayerTestSceneId
-	DebugSceneId
-	TestLevelSceneId
 	LevelSceneId
-	SortingSpritesSceneId
+	PauseSceneId
 )
 
 type Scene interface {
