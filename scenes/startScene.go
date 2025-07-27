@@ -69,7 +69,7 @@ func (s *StartScene) Draw(screen *ebiten.Image) {
 
 func (s *StartScene) Update() SceneId {
 	if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
-		return TestLevelSceneId
+		return LevelSceneId
 	}
 
 	return StartSceneId
@@ -77,6 +77,7 @@ func (s *StartScene) Update() SceneId {
 
 func (s *StartScene) FirstLoad() {
 	s.font = ui.NewFont()
+	s.loaded = true
 }
 
 func (s *StartScene) IsLoaded() bool {

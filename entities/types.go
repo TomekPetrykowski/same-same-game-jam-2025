@@ -5,6 +5,7 @@ import (
 )
 
 type SceneObjectId uint
+type EnemyTypeId uint
 type ObjectsMap map[SceneObjectId][]GameObject
 
 const (
@@ -13,6 +14,13 @@ const (
 	EnemyProjectilesObjectId
 	PlayerProjectilesObjectId
 	StaticsObjectId
+	PortalsObjectId
+)
+
+const (
+	BombheadTypeId EnemyTypeId = iota
+	Zombiehead
+	Shooter
 )
 
 type Scene interface {
