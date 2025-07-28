@@ -16,17 +16,17 @@ type LevelScene struct {
 	loaded     bool
 	background *ebiten.Image
 	objects    e.ObjectsMap
-	waves      []e.Wave
+	// waves      []e.Wave
 	// delay in frames
-	wavesDelay int
+	// wavesDelay int
 }
 
 func NewLevelScene() *LevelScene {
 
 	return &LevelScene{
 		loaded:     false,
-		waves:      []e.Wave{},
-		wavesDelay: 60 * 5,
+		// waves:      []e.Wave{},
+		// wavesDelay: 60 * 5,
 	}
 }
 
@@ -50,12 +50,7 @@ func (d *LevelScene) FirstLoad() {
 		),
 	}
 
-	d.objects[e.PortalsObjectId] = []e.GameObject{
-		e.NewEntity(e.NewRect(320-10, 39, 20, 20), &placeholderSprite),
-		e.NewEntity(e.NewRect(50, 360/2-10, 20, 20), &placeholderSprite),
-		e.NewEntity(e.NewRect(640-50-20, 360/2-10, 20, 20), &placeholderSprite),
-		e.NewEntity(e.NewRect(320-10, 360-39-20, 20, 20), &placeholderSprite),
-	}
+	
 
 	background := images.LoadImage(
 		"assets/background.png",
@@ -66,10 +61,17 @@ func (d *LevelScene) FirstLoad() {
 
 	//read level data
 	d.objects = make(map[e.SceneObjectId][]e.GameObject)
+	d.objects[e.PortalsObjectId] = []e.GameObject{
+		e.NewEntity(e.NewRect(320-10, 39, 20, 20), &placeholderSprite),
+		e.NewEntity(e.NewRect(50, 360/2-10, 20, 20), &placeholderSprite),
+		e.NewEntity(e.NewRect(640-50-20, 360/2-10, 20, 20), &placeholderSprite),
+		e.NewEntity(e.NewRect(320-10, 360-39-20, 20, 20), &placeholderSprite),
+	}
+	
 	d.objects[e.PlayerObjectId] = []e.GameObject{e.NewPlayer(320, 180)}
 	d.objects[e.EnemiesObjectId] = []e.GameObject{
-		// e.NewBombHead(100, 100),
-		// e.NewShootyEnemy(140, 140),
+		e.NewBombHead(100, 100),
+		e.NewShootyEnemy(140, 140),
 	}
 	d.objects[e.EnemyProjectilesObjectId] = []e.GameObject{}
 	d.objects[e.PlayerProjectilesObjectId] = []e.GameObject{}
@@ -81,22 +83,22 @@ func (d *LevelScene) FirstLoad() {
 	}
 
 	// waves
-	d.waves = []e.Wave{
-		{
-			EnemyTypeQuantity: map[e.EnemyTypeId]int{
-				e.Shooter:        2,
-				e.BombheadTypeId: 5,
-			},
-			SpawnDelay: 60,
-		},
-		{
-			EnemyTypeQuantity: map[e.EnemyTypeId]int{
-				e.Shooter:        1,
-				e.BombheadTypeId: 10,
-			},
-			SpawnDelay: 30,
-		},
-	}
+	// d.waves = []e.Wave{
+	// 	{
+	// 		EnemyTypeQuantity: map[e.EnemyTypeId]int{
+	// 			e.Shooter:        2,
+	// 			e.BombheadTypeId: 5,
+	// 		},
+	// 		SpawnDelay: 60,
+	// 	},
+	// 	{
+	// 		EnemyTypeQuantity: map[e.EnemyTypeId]int{
+	// 			e.Shooter:        1,
+	// 			e.BombheadTypeId: 10,
+	// 		},
+	// 		SpawnDelay: 30,
+	// 	},
+	// }
 
 	// d.wavesDelay = 60 * 10
 }
@@ -124,14 +126,14 @@ func (d *LevelScene) Update() SceneId {
 		return PauseSceneId
 	}
 
-	d.wavesDelay -= 1
+	// d.wavesDelay -= 1
 
-	for _, wave := range d.waves {
-		if d.wavesDelay <= 0 {
-			wave.SpawnEnemies(d)
-			d.wavesDelay = 60 * 20
-		}
-	}
+	// for _, wave := range d.waves {
+	// 	if d.wavesDelay <= 0 {
+	// 		wave.SpawnEnemies(d)
+	// 		d.wavesDelay = 60 * 20
+	// 	}
+	// }
 
 	for _, list := range d.objects {
 		for _, o := range list {
